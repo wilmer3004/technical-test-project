@@ -82,7 +82,7 @@ DATABASES = {
         'PORT':'3306',
         'USER':'root',
         'PASSWORD':'',
-        'NAME': 'prueba_tecnica',
+        'NAME': 'prueba_tecnica_django',
         'OPTIONS':{
             'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"
         }
