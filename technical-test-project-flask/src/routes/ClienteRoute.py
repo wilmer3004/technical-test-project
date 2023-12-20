@@ -7,6 +7,7 @@ from src.services.ClienteService import ClienteService
 # Security
 from src.utils.Security import Security
 
+
 main = Blueprint('cliente_blueprint',__name__)
 
 # Get

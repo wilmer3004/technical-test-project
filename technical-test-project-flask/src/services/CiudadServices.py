@@ -1,7 +1,7 @@
 from src.database.db_mysql import get_connection
 from src.models.CiudadModel import CiudadModel
 
-class ClienteService:
+class CiudadServices:
     # Get
     @classmethod
     def get_ciudad(cls):

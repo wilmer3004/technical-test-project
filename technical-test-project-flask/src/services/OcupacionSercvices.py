@@ -1,7 +1,7 @@
 from src.database.db_mysql import get_connection
 from src.models.OcupacionModel import OcupacionModel
 
-class ClienteService:
+class OcupacionSercvices:
     # Get
     @classmethod
     def get_ocupacion(cls):
@@ -9,7 +9,7 @@ class ClienteService:
             connection = get_connection()
             ocupaciones = []
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM ciudad")
+                cursor.execute("SELECT * FROM ocupacion")
                 resultOcupaciones = cursor.fetchall()
                 for row in resultOcupaciones:
                     ocupacion = OcupacionModel(int(row[0]),row[1],row[2])

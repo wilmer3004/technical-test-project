@@ -1,5 +1,6 @@
 from src.database.db_mysql import get_connection
 from src.models.ClienteModel import ClienteModel
+from datetime import datetime
 
 class ClienteService:
     # Get
@@ -12,8 +13,26 @@ class ClienteService:
                 cursor.execute("SELECT * FROM cliente")
                 resultCliente = cursor.fetchall()
                 for row in resultCliente:
-                    cliente = ClienteModel(int(row[0]),row[1],row[2],row[3],int(row[4]),row[5],row[6],row[7],row[8],row[9])
+                    
+                    fecha_nacimiento = row[5]
+                    fecha_actual = datetime.now()
+
+                    # Calcular la edad
+                    edad = fecha_actual.year - fecha_nacimiento.year - ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+
+
+                    if edad >=18 and edad <=65:
+                        sql = ("UPDATE cliente SET  clienteEsViable = %s WHERE numIdentCliente = %s")
+                        data = (1,int(row[0]))
+                        cursor.execute(sql,data)
+                    else:
+                        sql = ("UPDATE cliente SET  clienteEsViable = %s WHERE numIdentCliente = %s")
+                        data = (0,int(row[0]))
+                        cursor.execute(sql,data)
+
+                    cliente = ClienteModel(int(row[0]),row[1],row[2],row[3],int(row[4]),str(fecha_nacimiento),row[6],row[7],row[8],row[9])
                     clientes.append(cliente.to_json())
+                    
             connection.commit()
             return clientes
         except Exception as ex:
