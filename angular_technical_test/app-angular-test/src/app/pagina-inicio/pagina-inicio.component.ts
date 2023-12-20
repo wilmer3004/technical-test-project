@@ -20,6 +20,6 @@ export class PaginaInicioComponent {
   }
 
   registrar() {
-    this.router.navigate(['registroUsu']);
+    this.router.navigate(['formclient']);
   }
 }

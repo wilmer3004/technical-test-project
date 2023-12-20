@@ -21,6 +21,8 @@
               <th>Ciudad</th>
               <th>Ocupacion</th>
               <th>viavilidad</th>
+              <th>Editar</th>
+              <th>Activar/Inactivar</th>
             </tr>
           </thead>
           <tbody>
@@ -32,9 +34,15 @@
               <td>{{ cliente.telefonoCliente }}</td>
               <td>{{ cliente.fechaNacimientoCliente }}</td>
               <td>{{ cliente.estadoCliente === 1 ? 'Activo' : (cliente.estadoCliente === 0 ? 'Inactivo' : 'Undefined') }}</td>
-              <td>{{ cliente.idCiudadFK }}</td>
-              <td>{{ cliente.idOcupacionFK }}</td>
+              <td>{{ ciudadMap[cliente.idCiudadFK] }}</td>
+              <td>{{ ocupacionMap[cliente.idOcupacionFK] }}</td>
               <td>{{ cliente.clienteEsViable  === 1 ? 'Viable' : (cliente.clienteEsViable === 0 ? 'No viable' : 'Undefined') }}</td>
+              <td><button type="button" (click)="formularioCliente(cliente.numIdentCliente)">Editar</button></td>
+              <td>
+                <button type="button" (click)="estadoCliente( cliente.numIdentCliente,cliente.estadoCliente)">
+                    {{ cliente.estadoCliente === 1 ? 'Activo' : (cliente.estadoCliente === 0 ? 'Inactivo' : 'Undefined') }}
+                </button>
+            </td>
             </tr>
           </tbody>
         </table>

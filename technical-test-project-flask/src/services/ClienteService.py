@@ -43,12 +43,12 @@ class ClienteService:
 
     # Post
     @classmethod
-    def add_cliente(cls,numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,estadoCliente,clienteEsViable,idCiudadFK,idOcupacionFK):
+    def add_cliente(cls,numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,estadoCliente,idCiudadFK,idOcupacionFK):
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
                 sql = 'INSERT INTO cliente VALUES  (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-                data = (numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,estadoCliente,clienteEsViable,idCiudadFK,idOcupacionFK)
+                data = (numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,estadoCliente,0,idCiudadFK,idOcupacionFK)
                 cursor.execute(sql, data)
             connection.commit()  # Realizar commit de la transacción
             return True
@@ -60,12 +60,12 @@ class ClienteService:
 
     # Put
     @classmethod
-    def put_cliente(cls, numIdentCliente, nombresCliente, apellidosCliente, correoCliente, telefonoCliente, fechaNacimientoCliente, estadoCliente, clienteEsViable, idCiudadFK, idOcupacionFK):
+    def put_cliente(cls, numIdentCliente, nombresCliente, apellidosCliente, correoCliente, telefonoCliente, fechaNacimientoCliente, estadoCliente, idCiudadFK, idOcupacionFK):
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
-                sql = 'UPDATE cliente SET nombresCliente = %s, apellidosCliente = %s, correoCliente = %s, telefonoCliente = %s, fechaNacimientoCliente = %s, estadoCliente = %s, clienteEsViable = %s, idCiudadFK = %s, idOcupacionFK = %s WHERE numIdentCliente = %s'
-                data = (nombresCliente, apellidosCliente, correoCliente, telefonoCliente, fechaNacimientoCliente, estadoCliente, clienteEsViable, idCiudadFK, idOcupacionFK, numIdentCliente)
+                sql = 'UPDATE cliente SET nombresCliente = %s, apellidosCliente = %s, correoCliente = %s, telefonoCliente = %s, fechaNacimientoCliente = %s, estadoCliente = %s, idCiudadFK = %s, idOcupacionFK = %s WHERE numIdentCliente = %s'
+                data = (nombresCliente, apellidosCliente, correoCliente, telefonoCliente, fechaNacimientoCliente, estadoCliente, idCiudadFK, idOcupacionFK, numIdentCliente)
                 cursor.execute(sql, data)
             connection.commit()
             return True
@@ -107,7 +107,8 @@ class ClienteService:
                 cursor.execute(sql,data)
                 resultCliente = cursor.fetchall()
                 for row in resultCliente:
-                    cliente = ClienteModel(int(row[0]),row[1],row[2],row[3],int(row[4]),row[5],row[6],row[7],row[8],row[9])
+                    fecha_nacimiento = row[5]
+                    cliente = ClienteModel(int(row[0]),row[1],row[2],row[3],int(row[4]),str(fecha_nacimiento),row[6],row[7],row[8],row[9])
                     clientes.append(cliente.to_json())
             connection.commit()
             return clientes

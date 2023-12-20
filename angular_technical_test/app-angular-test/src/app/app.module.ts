@@ -8,6 +8,8 @@ import { PaginaInicioComponent } from './pagina-inicio/pagina-inicio.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormClienteComponent } from './form-cliente/form-cliente.component';
+import { FormClientePostComponent } from './form-cliente-post/form-cliente-post.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppComponent,
     PaginaInicioComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    FormClienteComponent,
+    FormClientePostComponent
   ],
   imports: [
     BrowserModule,
