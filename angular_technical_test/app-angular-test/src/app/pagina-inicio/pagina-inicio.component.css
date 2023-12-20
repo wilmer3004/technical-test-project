@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.dashboard-container{
+    min-width: 100vw;
+    min-height: 100vh;
+    text-align: left;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #A4D165;
+}
+
+.boton{
+    width: 120px;
+    height: 60px;
+    border: none;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 12px;
+    background-color:  #81c226;
+    color: white;
+    border: solid 2px #507024;
+    margin-right: 40px;
+}
+
+.boton:hover {
+    background-color: #a0e73d;
+    color: white;
+    border: solid 2px #cbee9a;
+}
+
+h1{
+    color: #f1eeee;
+    margin: 0;
+}
+
+.contenedorcuerpo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.contenedorcuerpo > .textCuerpo{
+    text-align: left;
+    padding: 0 5px;
+    font-size: 25px;
+}
+
+.logoIni{
+    width: auto;
+    height: 5rem;
+}
+
+.imgPikachu{
+    width: auto;
+    height: 30rem;  
+}
