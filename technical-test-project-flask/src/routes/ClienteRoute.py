@@ -4,29 +4,34 @@ from flask import Blueprint, jsonify, request
 
 from src.services.ClienteService import ClienteService
 
-
+# Security
+from src.utils.Security import Security
 
 main = Blueprint('cliente_blueprint',__name__)
 
 # Get
 @main.route('/',methods=['GET'])
 def get_cliente():
-
-    try:
-        clientes = ClienteService.get_cliente()
-        if len(clientes)>0:
-            
-            return jsonify({'message':'SUCCESS','success':True,'clientes':clientes})
-        else:
-            return jsonify({'message':'NOTFOUND','success':True, "ex":clientes})
-    except Exception as ex:
-        traceback_str = traceback.format_exc()
-        return jsonify({
-            'message': 'ERROR',
-            'success': False,
-            'exception_details': str(ex),
-            'traceback': traceback_str
-        }), 500
+    has_access = Security.verify_token(request.headers)
+    if has_access:
+        try:
+            clientes = ClienteService.get_cliente()
+            if len(clientes)>0:
+                
+                return jsonify({'message':'SUCCESS','success':True,'clientes':clientes})
+            else:
+                return jsonify({'message':'NOTFOUND','success':True, "ex":clientes})
+        except Exception as ex:
+            traceback_str = traceback.format_exc()
+            return jsonify({
+                'message': 'ERROR',
+                'success': False,
+                'exception_details': str(ex),
+                'traceback': traceback_str
+            }), 500
+    else:
+        response = jsonify({'message':'Unauthorized'})
+        return response,401
 
 
 # Post

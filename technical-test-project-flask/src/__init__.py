@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 
 # Routes
-from .routes import ClienteRoute
+from .routes import ClienteRoute, GerenteCRoute
 
 app = Flask(__name__)
 
@@ -15,7 +15,10 @@ def init_app(config):
 
     # Blueprints
 
+    # Clientes
     app.register_blueprint(ClienteRoute.main, url_prefix='/clientes')
+    # GerenteRoute
+    app.register_blueprint(GerenteCRoute.main, url_prefix='/gerentec')
 
     return app
 

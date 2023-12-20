@@ -1,12 +1,12 @@
 class GerenteCModel:
 
     # Constructor
-    def __init__(self,numIdentGerentC,correoGerentC,passwordGerenteC,nombresCliente,apellidosCliente) -> None:
+    def __init__(self,numIdentGerentC,correoGerentC,passwordGerenteC,nombresGerenteC,apellidosGerenteC) -> None:
         self.numIdentGerentC= numIdentGerentC
         self.correoGerentC = correoGerentC
         self.passwordGerenteC = passwordGerenteC
-        self.nombresCliente = nombresCliente
-        self.apellidosCliente = apellidosCliente
+        self.nombresGerenteC = nombresGerenteC
+        self.apellidosGerenteC = apellidosGerenteC
         
     
     # metodo convertir informacion a json
@@ -15,6 +15,6 @@ class GerenteCModel:
          "numIdentGerentC" : self.numIdentGerentC,
          "correoGerentC" : self.correoGerentC, 
          "passwordGerenteC" : self.passwordGerenteC,
-         "nombresCliente" : self.nombresCliente, 
-         "apellidosCliente" : self.apellidosCliente
+         "nombresGerenteC" : self.nombresGerenteC, 
+         "apellidosGerenteC" : self.apellidosGerenteC
         }
