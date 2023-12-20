@@ -1,4 +1,4 @@
-class ClieneModel:
+class ClienteModel:
 
     # Constructor
     def __init__(self,numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,estadoCliente,clienteEsViable,idCiudadFK,idOcupacionFK) -> None:

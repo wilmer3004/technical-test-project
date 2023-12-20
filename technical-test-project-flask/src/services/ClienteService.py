@@ -1,5 +1,5 @@
 from src.database.db_mysql import get_connection
-from src.models.ClienteModel import ClieneModel
+from src.models.ClienteModel import ClienteModel
 
 class ClienteService:
     # Get
@@ -12,7 +12,7 @@ class ClienteService:
                 cursor.execute("SELECT * FROM cliente")
                 resultCliente = cursor.fetchall()
                 for row in resultCliente:
-                    cliente = ClieneModel(int(row[0]),row[1],row[2],row[3],int(row[4]),row[5],row[6],row[7],row[8],row[9])
+                    cliente = ClienteModel(int(row[0]),row[1],row[2],row[3],int(row[4]),row[5],row[6],row[7],row[8],row[9])
                     clientes.append(cliente.to_json())
             connection.commit()
             return clientes
@@ -88,7 +88,7 @@ class ClienteService:
                 cursor.execute(sql,data)
                 resultCliente = cursor.fetchall()
                 for row in resultCliente:
-                    cliente = ClieneModel(int(row[0]),row[1],row[2],row[3],int(row[4]),row[5],row[6],row[7],row[8],row[9])
+                    cliente = ClienteModel(int(row[0]),row[1],row[2],row[3],int(row[4]),row[5],row[6],row[7],row[8],row[9])
                     clientes.append(cliente.to_json())
             connection.commit()
             return clientes
