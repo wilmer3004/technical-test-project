@@ -31,5 +31,10 @@ export class DashboardComponent {
     }
   }
 
+  logout(){
+    this.cookieService.deleteAll();
+    this.router.navigate(['login']);
+  }
+
 
 }

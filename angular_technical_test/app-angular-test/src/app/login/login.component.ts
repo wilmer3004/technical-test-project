@@ -68,4 +68,7 @@ export class LoginComponent {
   postLogin(requestBody: any) {
     return this.http.post<any>('http://127.0.0.1:5000/gerentec/', requestBody);
   }
+  volver(){
+    this.router.navigate(['']);
+  }
 }
