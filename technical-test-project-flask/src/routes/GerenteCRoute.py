@@ -14,9 +14,9 @@ main = Blueprint('gerente_Blueprint',__name__)
 @main.route('/',methods=['POST'])
 def login():
     try:
-        correoGerentC = request.json['correoGerentC']
-        passwordGerenteC = request.json['passwordGerenteC']
-        _autenticacion = GerenteCModel(0,correoGerentC,passwordGerenteC,"","")
+        correoGerenteC = request.json['correoGerenteC']
+        passwordGerenteC = request.json['PasswordGerenteC']
+        _autenticacion = GerenteCModel(0,correoGerenteC,passwordGerenteC,"","")
         autenticacion_usuario = GerenteCServices.login_user(_autenticacion)
         if (autenticacion_usuario != None):
             generar_token = Security.generar_token(autenticacion_usuario)

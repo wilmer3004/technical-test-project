@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -10,47 +12,52 @@ export class LoginComponent {
 
   correo: string = '';
   password: string = '';
+  response: any = {};
+  token: string = '';
 
-  constructor(private router:Router){
-  }
+  constructor(private router:Router, private http:HttpClient, private cookieService: CookieService) {}
 
-  ngOnInit(): void {  }
-  
-  login(){
-    
-    if (this.correo != '' && this.password != ''){
-      
-      // Variables
+  ngOnInit(): void {}
+
+  async login() {
+    if (this.correo != '' && this.password != '') {
       const correoValidar = this.validarCorreo(this.correo);
-      const passwordValidar = this.password.length
-      
-      // Validar que los datos sean correctos
-        if(correoValidar == true && passwordValidar>8){
-          // const usuarioEncontrado = this.usuarios.find((usuario: { Correo: string, Password: string }) => usuario.Correo === this.correo && usuario.Password === this.password);
-          // if(usuarioEncontrado){
+      const passwordValidar = this.password.length;
 
-          // }
-          // else{
-          //   alert('Datos de usuario invalidos');
-          // }
-        }
+      if (correoValidar && passwordValidar > 8) {
+        const requestBody = {
+          correoGerenteC: this.correo,
+          PasswordGerenteC: this.password
+        };
 
-        else if(correoValidar==false && passwordValidar>8){
-          alert('formato de correo no valido')
-        }
-       
-        else if (correoValidar==true && passwordValidar<8){
-          alert('Longitud minima de 8 caracteres')
-        }
-        else{
-          alert('Formato de contraseña y correo invalidos ')
+        try {
+          // Convertir el observable a una promesa usando toPromise()
+          const data = await this.postLogin(requestBody).toPromise();
 
+          // Después de la solicitud, verificar la respuesta
+          if (data.success) {
+            this.response = data;  // Actualizar la variable response
+            this.token = this.response.token;
+            // Almacena el token en la cookie
+            this.cookieService.set('token', this.token);
+            this.router.navigate(['dashboard']);
+          } else {
+            alert('Datos de usuario inválidos');
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
+          alert('Error en la solicitud');
         }
+      } else if (!correoValidar && passwordValidar > 8) {
+        alert('Formato de correo no válido');
+      } else if (correoValidar && passwordValidar < 8) {
+        alert('Longitud mínima de 8 caracteres para la contraseña');
+      } else {
+        alert('Formato de contraseña y/o correo inválidos');
+      }
+    } else {
+      alert('Ninguno de los campos puede quedar vacío');
     }
-    else{
-      alert('ninguno de los campos puede quedar vacio')
-    }
-
   }
 
   validarCorreo(correo1: string): boolean {
@@ -58,6 +65,7 @@ export class LoginComponent {
     return patron.test(correo1);
   }
 
-
-
+  postLogin(requestBody: any) {
+    return this.http.post<any>('http://127.0.0.1:5000/gerentec/', requestBody);
+  }
 }

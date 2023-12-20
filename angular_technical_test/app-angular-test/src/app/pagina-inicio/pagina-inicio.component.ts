@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pagina-inicio',
@@ -9,23 +10,16 @@ import { Router } from '@angular/router';
 })
 export class PaginaInicioComponent {
 
-  constructor(private router:Router,private http:HttpClient){
-  }
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {}
 
   async ngOnInit() {
-    this.http.get<any>(`http://127.0.0.1:5000/clientes/`).subscribe(data => {
-     console.log(data)
-      });
   }
 
-login(){
-  this.router.navigate(['login']);
-}
+  login() {
+    this.router.navigate(['login']);
+  }
 
-registrar(){
-  this.router.navigate(['registroUsu']);
-}
-  
-
-
+  registrar() {
+    this.router.navigate(['registroUsu']);
+  }
 }
