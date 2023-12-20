@@ -1,0 +1,114 @@
+create database prueba_tecnica;
+use prueba_tecnica;
+
+create table cliente(
+numIdentCliente bigint unique not null primary key,
+nombresCliente varchar (85) not null,
+apellidosCliente varchar (85) not null,
+correoCliente varchar (255) unique not null,
+telefonoCliente bigint unique not null,
+fechaNacimientoCliente date not null,
+estadoCliente bool not null,
+clienteEsViable bool not null,
+idCiudadFK int not null,
+idOcupacionFK int not null
+);
+
+create table ciudad(
+idCiudad int auto_increment primary key,
+nombreCiudad varchar (255) not null,
+estadoCiudad boolean not null
+);
+
+create table ocupacion(
+idocupacion int auto_increment primary key,
+nombreocupacion varchar (115) not null,
+estadoocupacion boolean not null
+);
+
+create table gerenteComercial(
+numIdentGerentC bigint unique not null primary key,
+correoGerentC varchar (255) unique not null,
+passwordGerenteC varchar (105) not null,
+nombresGerenteC varchar (85) not null,
+apellidosGerenteC varchar (85) not null
+);
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_cliente_ciudad
+FOREIGN KEY (idCiudadFK)
+REFERENCES ciudad(idCiudad);
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_cliente_ocupacion
+FOREIGN KEY (idOcupacionFK)
+REFERENCES ocupacion(idocupacion);
+
+INSERT INTO ocupacion (nombreOcupacion,estadoOcupacion) 
+values ('Empleado',true),
+('Independiente',true),
+('Pensionado',true);
+
+
+INSERT INTO ciudad (nombreCiudad, estadoCiudad) VALUES
+('Bogotá', 1),
+('Medellín', 1),
+('Cali', 1),
+('Barranquilla', 1),
+('Cartagena', 1),
+('Cúcuta', 1),
+('Santa Marta', 1),
+('Bucaramanga', 1),
+('Villavicencio', 1),
+('Ibagué', 1),
+('Pereira', 1),
+('Cúcuta', 1),
+('Pasto', 1),
+('Manizales', 1),
+('Neiva', 1),
+('Popayán', 1),
+('Valledupar', 1),
+('Montería', 1),
+('Quibdó', 1),
+('Arauca', 1),
+('Sincelejo', 1),
+('Tunja', 1),
+('Riohacha', 1);
+
+-- inserciones
+
+-- Insertar datos en la tabla ocupacion
+INSERT INTO cliente (
+  numIdentCliente, 
+  nombresCliente, 
+  apellidosCliente, 
+  correoCliente, 
+  telefonoCliente, 
+  fechaNacimientoCliente, 
+  estadoCliente, 
+  clienteEsViable, 
+  idCiudadFK, 
+  idOcupacionFK
+)
+VALUES 
+	(123456789, 'Juan', 'Pérez', 'juan@example.com', 3001234567, '1990-01-01', 1, 1, 1, 1),
+	(987654321, 'María', 'Gómez', 'maria@example.com', 3007654321, '1985-05-15', 1, 0, 2, 2),
+	(1112224333, 'Carlos', 'Ramírez', 'carlos1@example.com', 3015256666, '2011-12-10', 1, 1, 3, 3);
+  
+-- Insertar datos en la tabla gerenteComercial
+INSERT INTO gerenteComercial (
+  numIdentGerentC, 
+  correoGerentC, 
+  passwordGerenteC, 
+  nombresGerenteC, 
+  apellidosGerenteC
+)
+VALUES 
+  (789012345, 'gerente1@example.com', 'contraseña123', 'Gerente', 'Uno'),
+  (456789012, 'gerente2@example.com', 'clave456', 'Gerente', 'Dos'),
+  (123456789, 'gerente3@example.com', 'password789', 'Gerente', 'Tres');
+  
+  
+
+
+
