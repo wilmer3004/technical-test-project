@@ -1,11 +1,47 @@
 <div class="dashboard-container">
     <nav>
-        <h1>CREDIFAMILIA</h1>
-        <button type="button" class="boton" (click)="logout()" >LogOut</button>
+      <h1>CREDIFAMILIA</h1>
+      <button type="button" class="boton" (click)="logout()">LogOut</button>
     </nav>
     <div class="contenedorcuerpo">
-        <div class="textCuerpo">
-            <p>Informacion de los clientes</p>
-        </div>
+      <div class="textCuerpo">
+        <p>Informacion de los clientes</p>
+      </div>
+      <div *ngIf="clientes && clientes.length > 0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Fecha nacimiento</th>
+              <th>Estado</th>
+              <th>Ciudad</th>
+              <th>Ocupacion</th>
+              <th>viavilidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cliente of clientes">
+              <td>{{cliente.numIdentCliente}}</td>
+              <td>{{ cliente.nombresCliente }}</td>
+              <td>{{ cliente.apellidosCliente }}</td>
+              <td>{{ cliente.correoCliente }}</td>
+              <td>{{ cliente.telefonoCliente }}</td>
+              <td>{{ cliente.fechaNacimientoCliente }}</td>
+              <td>{{ cliente.estadoCliente === 1 ? 'Activo' : (cliente.estadoCliente === 0 ? 'Inactivo' : 'Undefined') }}</td>
+              <td>{{ cliente.idCiudadFK }}</td>
+              <td>{{ cliente.idOcupacionFK }}</td>
+              <td>{{ cliente.clienteEsViable  === 1 ? 'Viable' : (cliente.clienteEsViable === 0 ? 'No viable' : 'Undefined') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="!clientes || clientes.length === 0">
+        <p>No hay clientes disponibles.</p>
+      </div>
     </div>
-</div>
+  </div>
+  

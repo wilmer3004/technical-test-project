@@ -9,7 +9,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class DashboardComponent {
 
-
+  clientes: any[] = [];  
+  ciudades: any[] = [];  
+  ocupaciones: any[] = [];  
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {}
 
   async ngOnInit() {
@@ -22,9 +24,31 @@ export class DashboardComponent {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
       // Realiza la solicitud HTTP con el encabezado de autorización
+      // Clientes
       this.http.get<any>('http://127.0.0.1:5000/clientes/', { headers }).subscribe(data => {
         console.log(data);
+        if(data.success == true){
+        this.clientes=data.clientes
+        }
       });
+
+      // Ocupaciones
+      this.http.get<any>('http://127.0.0.1:5000/ocupacion/', { headers }).subscribe(data => {
+        console.log(data);
+        if(data.success == true){
+          this.ocupaciones=data.ocupacion
+        }
+      });
+
+      // Ciudades
+      this.http.get<any>('http://127.0.0.1:5000/ciudad/', { headers }).subscribe(data => {
+        console.log(data);
+        if(data.success == true){
+          this.ciudades=data.ciudades
+        }
+      });
+
+
     }
     else{
       this.router.navigate(['login']);
