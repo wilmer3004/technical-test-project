@@ -1,8 +1,13 @@
 <div class="dashboard-container">
     <nav>
-      <h1>CREDIFAMILIA</h1>
-      <button type="button" class="boton" (click)="logout()">LogOut</button>
-    </nav>
+      <div class="data-logo">
+          <img src="../../assets/img/logo_credifamilia.png" alt="logo CREDIFAMILIA" class="logo-credifamilia">
+      </div>
+      <div class="botones">
+        <button type="button" class="boton" (click)="logout()">LogOut</button>
+
+      </div>
+  </nav>
     <div class="contenedorcuerpo">
       <div class="textCuerpo">
         <p>Informacion de los clientes</p>
@@ -51,5 +56,8 @@
         <p>No hay clientes disponibles.</p>
       </div>
     </div>
+    <footer>
+      <app-footer></app-footer>
+    </footer>
   </div>
   
