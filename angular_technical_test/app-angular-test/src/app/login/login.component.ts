@@ -14,6 +14,7 @@ export class LoginComponent {
   password: string = '';
   response: any = {};
   token: string = '';
+  dataError:string = ''; 
 
   constructor(private router:Router, private http:HttpClient, private cookieService: CookieService) {}
 
@@ -42,21 +43,21 @@ export class LoginComponent {
             this.cookieService.set('token', this.token);
             this.router.navigate(['dashboard']);
           } else {
-            alert('Datos de usuario inválidos');
+            this.dataError = 'Datos de usuario inválidos';
           }
         } catch (error) {
           console.error('Error en la solicitud:', error);
-          alert('Error en la solicitud');
+          this.dataError = '¡Error de servidor!';
         }
       } else if (!correoValidar && passwordValidar > 8) {
-        alert('Formato de correo no válido');
+        this.dataError = 'Formato de correo no válido';
       } else if (correoValidar && passwordValidar < 8) {
-        alert('Longitud mínima de 8 caracteres para la contraseña');
+        this.dataError = 'Longitud mínima de 8 caracteres para la contraseña';
       } else {
-        alert('Formato de contraseña y/o correo inválidos');
+        this.dataError = 'Formato de contraseña y/o correo inválidos';
       }
     } else {
-      alert('Ninguno de los campos puede quedar vacío');
+      this.dataError = 'Ninguno de los campos puede quedar vacío';
     }
   }
 
