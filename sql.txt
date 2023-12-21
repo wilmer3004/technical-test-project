@@ -107,8 +107,56 @@ VALUES
   (789012345, 'gerente1@example.com', 'contraseña123', 'Gerente', 'Uno'),
   (456789012, 'gerente2@example.com', 'clave456', 'Gerente', 'Dos'),
   (123456789, 'gerente3@example.com', 'password789', 'Gerente', 'Tres');
-  
-  
+
+DELIMITER //  
+CREATE FUNCTION calcular_edad(fecha_nacimiento DATE)
+RETURNS INT
+BEGIN
+  DECLARE edad INT;
+  SET edad = TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE());
+  RETURN edad;
+END;
+//
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_cliente
+BEFORE INSERT ON cliente
+FOR EACH ROW
+BEGIN
+  DECLARE edad_cliente INT;
+  SET edad_cliente = calcular_edad(NEW.fechaNacimientoCliente);
+
+  IF edad_cliente BETWEEN 18 AND 65 THEN
+    SET NEW.clienteEsViable = TRUE;
+  ELSE
+    SET NEW.clienteEsViable = FALSE;
+  END IF;
+END;
+
+//
+
+CREATE TRIGGER before_update_cliente
+BEFORE UPDATE ON cliente
+FOR EACH ROW
+BEGIN
+  DECLARE edad_cliente INT;
+  SET edad_cliente = calcular_edad(NEW.fechaNacimientoCliente);
+
+  IF edad_cliente BETWEEN 18 AND 65 THEN
+    SET NEW.clienteEsViable = TRUE;
+  ELSE
+    SET NEW.clienteEsViable = FALSE;
+  END IF;
+END;
+
+//
+
+DELIMITER ;
+
+
+
+
 
 
 

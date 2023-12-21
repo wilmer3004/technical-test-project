@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { FormClientePostComponent } from './form-cliente-post/form-cliente-post.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormClientePostComponent } from './form-cliente-post/form-cliente-post.
     LoginComponent,
     DashboardComponent,
     FormClienteComponent,
-    FormClientePostComponent
+    FormClientePostComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -47,11 +47,10 @@ def add_Cliente():
             correoCliente =request.json['correoCliente']
             telefonoCliente = int(request.json['telefonoCliente'])
             fechaNacimientoCliente = request.json['fechaNacimientoCliente']
-            estadoCliente = request.json['estadoCliente']           
             idCiudadFK = request.json['idCiudadFK']        
             idOcupacionFK = request.json['idOcupacionFK']    
 
-            clienteAdd = ClienteService.add_cliente(numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,estadoCliente,idCiudadFK,idOcupacionFK)
+            clienteAdd = ClienteService.add_cliente(numIdentCliente,nombresCliente,apellidosCliente,correoCliente,telefonoCliente,fechaNacimientoCliente,True,idCiudadFK,idOcupacionFK)
             if clienteAdd == True:
                 return jsonify({'add':clienteAdd,'message':'SUCCESS','success':True})
             else:

@@ -1,12 +1,31 @@
+<!-- Componente dashoard -->
 <div class="dashboard-container">
+
     <nav>
-        <h1>CREDIFAMILIA</h1>
-        <button type="button" class="boton" (click)="login()">Login</button>
-        <button type="button" class="boton" (click)="registrar()">Registrar</button>
+        <div class="data-logo">
+            <img src="../../assets/img/logo_credifamilia.png" alt="logo CREDIFAMILIA" class="logo-credifamilia">
+        </div>
+        <div class="botones">
+            <button type="button" class="boton" (click)="registrar()">Registrar</button>
+            <button type="button" class="boton" (click)="login()">Login</button>
+        </div>
     </nav>
+    <div class="title-content">
+        <h1>CREDIFAMILIA</h1>
+    </div>
+
     <div class="contenedorcuerpo">
         <div class="textCuerpo">
             <p>¡Es el momento de tener tu vivienda propia! Somos una compañía de financiamiento especializada en crédito hipotecario y ahorro para vivienda nueva y usada en Colombia. Estamos vigilados por la Superintendencia Financiera de Colombia y nuestros productos están protegidos por el Seguro de depósitos FOGAFIN.</p>
         </div>
+        <div class="imagen">
+            <img src="../../assets/img/logo_credifamilia.png" alt="logo CREDIFAMILIA" class="logo-credifamilia">
+        </div>
+
+
+
     </div>
+    <footer>
+        <app-footer></app-footer>
+    </footer>
 </div>

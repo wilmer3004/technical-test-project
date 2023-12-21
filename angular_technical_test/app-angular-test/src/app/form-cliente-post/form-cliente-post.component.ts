@@ -15,7 +15,6 @@ export class FormClientePostComponent {
   apellidosCliente: string = '';
   clienteEsViable: any;
   correoCliente: string = '';
-  estadoCliente: number = 0;
   fechaNacimientoCliente: string = '';
   idCiudadFK: number = 1;
   idOcupacionFK: number = 1;
@@ -74,7 +73,6 @@ export class FormClientePostComponent {
         "correoCliente":this.correoCliente,
         "telefonoCliente":this.telefonoCliente,
         "fechaNacimientoCliente":this.fechaNacimientoCliente,
-        "estadoCliente":this.estadoCliente,
         "idCiudadFK":this.idCiudadFK,
         "idOcupacionFK":this.idOcupacionFK,
       }
