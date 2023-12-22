@@ -75,12 +75,53 @@ h1{
     font-size: 25px;
 }
 
-.logoIni{
-    width: auto;
-    height: 5rem;
-}
+/* Estilo para la tabla */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para las celdas de encabezado */
+  .table-head th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  /* Estilo para las celdas de cuerpo */
+  .table-body td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  /* Alternar colores de fondo para las filas */
+  .table-body tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Estilo para los botones en las celdas de cuerpo */
+  .table-body button {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Estilo para los botones de activar/inactivar */
+  .table-body button.inactive {
+    background-color: #f44336;
+  }
+  
+  /* Estilo para los botones de editar */
+  .table-body button.edit {
+    background-color: #2196f3;
+  }
+  
 
-.imgPikachu{
-    width: auto;
-    height: 30rem;  
-}
+
+
+

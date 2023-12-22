@@ -14,7 +14,7 @@
       </div>
       <div *ngIf="clientes && clientes.length > 0">
         <table class="table">
-          <thead>
+          <thead class="table-head">
             <tr>
               <th>Id</th>
               <th>Nombres</th>
@@ -30,7 +30,7 @@
               <th>Activar/Inactivar</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-body">
             <tr *ngFor="let cliente of clientes">
               <td>{{cliente.numIdentCliente}}</td>
               <td>{{ cliente.nombresCliente }}</td>
