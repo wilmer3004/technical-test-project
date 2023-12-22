@@ -18,8 +18,10 @@ export class FormClienteComponent {
   idCiudadFK: number = 0;
   idOcupacionFK: number = 0;
   nombresCliente: string = '';
-  telefonoCliente: number = 0;
+  telefonoCliente: string = '';
   numIdentCliente: number = 0;
+
+  dataError:string =''
 
   clientes: any[] = [];  
   ciudades: any[] = [];  
@@ -98,21 +100,154 @@ export class FormClienteComponent {
 
   async editarCliente() {
 
-      const requestBody = {
-        "nombresCliente":this.nombresCliente,
-        "apellidosCliente":this.apellidosCliente,
-        "correoCliente":this.correoCliente,
-        "telefonoCliente":this.telefonoCliente,
-        "fechaNacimientoCliente":this.fechaNacimientoCliente,
-        "estadoCliente":this.estadoCliente,
-        "idCiudadFK":this.idCiudadFK,
-        "idOcupacionFK":this.idOcupacionFK,
+
+    if( this.nombresCliente != '' && this.apellidosCliente !='' &&
+      this.correoCliente != '' && this.telefonoCliente != '' && this.fechaNacimientoCliente!='' &&
+      this.idCiudadFK != null && this.idOcupacionFK != null){
+        const correoValidar = this.validarCorreo(this.correoCliente);
+
+
+        if(!correoValidar){
+          this.dataError = 'Formato de correo no válido';
+          return;
+        }
+        if(this.correoCliente.length <6 || this.correoCliente.length >85){
+          this.dataError = 'Longitud del correo menor a 6 o mayor a 255'
+          return;
+        }
+
+        if(this.tipoNumero(this.telefonoCliente) != true){
+          this.dataError = 'El número de telefono no tiene un formato tipo numero válido';
+          return;
+        }
+
+        if(this.telefonoCliente.length <6 || this.telefonoCliente.length >12){
+          this.dataError = 'Longitud del número de telefono menor a 6 o mayor a 12'
+          return;
+        }
+
+        if(this.validarFecha(this.fechaNacimientoCliente) == true){
+          this.dataError = 'El formato de la fecha de nacimiento no es válido (debe ser YYYY-MM-DD)';
+          return;
+        }
+        if(this.validarFechaNacimiento(this.fechaNacimientoCliente) == false){
+          this.dataError = 'La fecha de nacimiento no es válida. Debe tener entre 6 y 80 años.';
+          return;
+        }
+
+
+
+        if(this.nombresCliente.length <2 || this.nombresCliente.length >85){
+          this.dataError = 'Longitud de los nombres menor a 2 o mayor a 85'
+          return;
+        }
+
+        if(this.apellidosCliente.length <2 || this.apellidosCliente.length >85){
+          this.dataError = 'Longitud de los nombres menor a 2 o mayor a 85'
+          return;
+        }
+
+
+
+
+        
+
+        const requestBody = {
+          "nombresCliente":this.nombresCliente,
+          "apellidosCliente":this.apellidosCliente,
+          "correoCliente":this.correoCliente,
+          "telefonoCliente":this.telefonoCliente,
+          "fechaNacimientoCliente":this.fechaNacimientoCliente,
+          "estadoCliente":this.estadoCliente,
+          "idCiudadFK":this.idCiudadFK,
+          "idOcupacionFK":this.idOcupacionFK,
+        }
+        try {
+          const data = await (await this.putCliente(requestBody, this.numIdentCliente)).toPromise();
+          console.log(data)
+          this.router.navigate(['dashboard']);
+    
+          // Errores de excepciones del servidor
+          if (data && data.exeption) {
+            if (data.exeption.includes("Duplicate entry")) {
+              if (data.exeption.includes(this.correoCliente)) {
+                this.dataError = 'Ya existe un cliente con el mismo correo electrónico.';
+              } 
+              if (data.exeption.includes(this.telefonoCliente)) {
+                this.dataError = 'Ya existe un cliente con el mismo número de teléfono.';
+              } else {
+                // Otras comprobaciones de excepciones si es necesario
+                this.dataError = 'Error inesperado al registrar el cliente.';
+              }
+    
+              return;
+            }
+          }
+    
+          this.router.navigate(['dashboard']);
+
+        } catch (error) {
+          console.error('Error al realizar la solicitud:', error);
+          this.dataError = 'Error inesperado al registrar el cliente.';
+        }
       }
-      const data = await (await this.putCliente(requestBody, this.numIdentCliente)).toPromise();
-      console.log(data)
-      this.router.navigate(['dashboard']);
+
+    else{
+      this.dataError = 'Ningún dato puede quedar vacío'
+    }
       
+
+
   }
+
+// Validaciones
+
+tipoNumero(numero:any){
+  if (isNaN(numero)) {
+    return false
+  }
+  else{
+    return true
+  }
+}
+
+validarCorreo(correo1: string): boolean {
+  const patron = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return patron.test(correo1);
+}
+
+validarFecha(fecha:any){
+  const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+if (!fechaRegex.test(fecha)) {
+  return true;
+}
+else{
+  return false;
+}
+}
+
+validarFechaNacimiento(fechaNacimientoCliente:string) {
+  const fechaActual = new Date();
+  const fechaNacimiento = new Date(fechaNacimientoCliente);
+
+  // Calcula la edad
+  const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+
+  // Verifica si la fecha de nacimiento es válida (entre 6 y 80 años en el pasado)
+  if (edad < 6 || edad > 80) {
+    return false
+  } else {
+   return true
+  }
+}
+
+
+
+
+
+// Put
+
   async putCliente(requestBody: any, numeroIdent: any){
     const token = this.cookieService.get('token');
     
