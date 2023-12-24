@@ -42,12 +42,13 @@
               <td>{{ ciudadMap[cliente.idCiudadFK] }}</td>
               <td>{{ ocupacionMap[cliente.idOcupacionFK] }}</td>
               <td>{{ cliente.clienteEsViable  === 1 ? 'Viable' : (cliente.clienteEsViable === 0 ? 'No viable' : 'Undefined') }}</td>
-              <td><button type="button" (click)="formularioCliente(cliente.numIdentCliente)">Editar</button></td>
+              <td><button class="btn-system edit" type="button" (click)="formularioCliente(cliente.numIdentCliente)">Editar</button></td>
+             <!-- Change the class of the button based on the client's state -->
               <td>
-                <button type="button" (click)="estadoCliente( cliente.numIdentCliente,cliente.estadoCliente)">
+                <button type="button" [ngClass]="{'btn-system inactive': cliente.estadoCliente === 0, 'btn-system active': cliente.estadoCliente === 1}" (click)="estadoCliente(cliente.numIdentCliente, cliente.estadoCliente)">
                     {{ cliente.estadoCliente === 1 ? 'Activo' : (cliente.estadoCliente === 0 ? 'Inactivo' : 'Undefined') }}
                 </button>
-            </td>
+              </td>
             </tr>
           </tbody>
         </table>

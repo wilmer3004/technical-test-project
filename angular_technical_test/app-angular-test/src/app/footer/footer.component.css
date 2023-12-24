@@ -22,3 +22,7 @@
     color: rgb(183, 183, 183);
 
 }
+
+.container-footer a:hover{
+    color: rgb(117, 117, 117);
+}
