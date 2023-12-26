@@ -6,6 +6,7 @@
 }
 .dashboard-container{
     min-height: 100vh;
+    min-width: 95vw;
     margin: 8px;
     margin-top: 8px;
 }
@@ -76,7 +77,7 @@ h1{
 
 /* Estilo para la tabla */
 .table {
-    width: 95vw;
+  min-width: 90vw;
     border-collapse: collapse;
     margin-top: 40px;
     font-weight: bold;
@@ -90,7 +91,7 @@ h1{
     text-align: left;
     border: 2px solid #ddd;
     color: white;
-    font-size: 20px;
+    font-size: 19px;
     text-shadow: 2px 2px 2px #313131;
   }
   
@@ -98,7 +99,7 @@ h1{
   .table-body td {
     padding: 10px;
     text-align: left;
-    font-size: 18px;
+    font-size: 17px;
     border: 2px solid #ddd;
     color: #282828;
   }
