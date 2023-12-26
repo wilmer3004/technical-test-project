@@ -175,25 +175,26 @@ export class FormClienteComponent {
             this.cookieService.deleteAll();
             this.router.navigate(['login']);
           }
-          this.router.navigate(['dashboard']);
     
           // Errores de excepciones del servidor
-          if (data && data.exeption) {
-            if (data.exeption.includes("Duplicate entry")) {
-              if (data.exeption.includes(this.correoCliente)) {
+
+          if (data && data.exception) {
+            if (data.exception.includes("Duplicate entry")) {
+              if (data.exception.includes(this.correoCliente)) {
                 this.dataError = 'Ya existe un cliente con el mismo correo electrónico.';
-              } 
-              if (data.exeption.includes(this.telefonoCliente)) {
+                return;
+              }
+              if (data.exception.includes(this.telefonoCliente)) {
                 this.dataError = 'Ya existe un cliente con el mismo número de teléfono.';
-              } else {
+                return;
+              } 
+              else {
                 // Otras comprobaciones de excepciones si es necesario
                 this.dataError = 'Error inesperado al registrar el cliente.';
               }
-    
               return;
             }
           }
-    
           this.router.navigate(['dashboard']);
 
         } catch (error) {
