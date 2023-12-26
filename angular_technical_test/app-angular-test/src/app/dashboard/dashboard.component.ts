@@ -148,13 +148,19 @@ export class DashboardComponent {
   }
 
   filterClients(): any[] {
-    return this.clientes.filter(cliente =>
+    const filteredClients = this.clientes.filter(cliente =>
       cliente.nombresCliente.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       cliente.apellidosCliente.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      cliente.numIdentCliente.toString().includes(this.searchTerm) || // Convertir a cadena antes de comparar
-      cliente.correoCliente.toString().includes(this.searchTerm) || // Convertir a cadena antes de comparar
-      cliente.telefonoCliente.toString().includes(this.searchTerm)    // Convertir a cadena antes de comparar
+      cliente.numIdentCliente.toString().includes(this.searchTerm) ||
+      cliente.correoCliente.toString().includes(this.searchTerm) ||
+      cliente.telefonoCliente.toString().includes(this.searchTerm)
     );
+
+    if (filteredClients.length > 0) {
+      this.currentPage = 1;
+    }
+  
+    return filteredClients;
   }
 
   
