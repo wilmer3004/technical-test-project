@@ -14,7 +14,7 @@
         <p>Informacion de los clientes</p>
       </div>
 
-      <div class="contenedor-info-tabla">
+      <div class="contenedor-info-tabla"  *ngIf="clientes && clientes.length > 0">
         <div class="search-container">
           <input type="text" id="search" [(ngModel)]="searchTerm" placeholder="filtrar datos.....">
           <label for="search" class="text-search"><img src="../../assets/img/buscar.png" alt="icono buscar" class="img-editar"></label>
