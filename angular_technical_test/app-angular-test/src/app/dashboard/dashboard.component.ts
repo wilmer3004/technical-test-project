@@ -18,6 +18,10 @@ export class DashboardComponent {
   ocupacionMap: any = {};
   ciudadMap: any = {};
 
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+
+
   searchTerm: string = '';  // Nueva propiedad para almacenar el término de búsqueda
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private location: Location) {}
@@ -152,7 +156,25 @@ export class DashboardComponent {
       cliente.telefonoCliente.toString().includes(this.searchTerm)    // Convertir a cadena antes de comparar
     );
   }
+
   
+  changePage(page: number): void {
+    this.currentPage = page;
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.filterClients().length / this.itemsPerPage);
+  }
+
+  paginatedClients(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filterClients().slice(startIndex, endIndex);
+  }
+  pagesArray(): number[] {
+    const totalPages = this.totalPages();
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
   
 
 }
