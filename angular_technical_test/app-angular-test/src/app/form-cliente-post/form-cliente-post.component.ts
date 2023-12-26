@@ -73,7 +73,7 @@ export class FormClientePostComponent {
   
   // Funcion volver
   volver(){
-    this.router.navigate(['']);
+    this.location.back();
   }
 
   // Funcion registrar
@@ -176,7 +176,7 @@ export class FormClientePostComponent {
             }
           }
     
-          this.router.navigate(['']);
+          this.location.back();
 
         } catch (error) {
           console.error('Error al realizar la solicitud:', error);

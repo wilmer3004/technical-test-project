@@ -4,6 +4,7 @@
           <img src="../../assets/img/logo_credifamilia.png" alt="logo CREDIFAMILIA" class="logo-credifamilia">
       </div>
       <div class="botones">
+        <button type="button" class="boton" (click)="registrar()">Registrar</button>
         <button type="button" class="boton" (click)="logout()">LogOut</button>
 
       </div>
@@ -12,6 +13,11 @@
       <div class="textCuerpo">
         <p>Informacion de los clientes</p>
       </div>
+      <div class="search-container">
+        <label for="search">Buscar:</label>
+        <input type="text" id="search" [(ngModel)]="searchTerm" placeholder="Ingrese un término de búsqueda">
+      </div>
+      
       <div *ngIf="clientes && clientes.length > 0">
         <table class="table">
           <thead class="table-head">
@@ -31,7 +37,7 @@
             </tr>
           </thead>
           <tbody class="table-body">
-            <tr *ngFor="let cliente of clientes">
+            <tr *ngFor="let cliente of filterClients()">
               <td>{{cliente.numIdentCliente}}</td>
               <td>{{ cliente.nombresCliente }}</td>
               <td>{{ cliente.apellidosCliente }}</td>

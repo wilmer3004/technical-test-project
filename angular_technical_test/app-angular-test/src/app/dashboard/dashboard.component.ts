@@ -17,6 +17,9 @@ export class DashboardComponent {
   ocupaciones: any[] = [];  
   ocupacionMap: any = {};
   ciudadMap: any = {};
+
+  searchTerm: string = '';  // Nueva propiedad para almacenar el término de búsqueda
+
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private location: Location) {}
 
   async ngOnInit() {
@@ -88,16 +91,21 @@ export class DashboardComponent {
     this.router.navigate(['login']);
   }
 
-  async estadoCliente(numeroIdent:any,estadoCliente:any){
+  async estadoCliente(numeroIdent: any, estadoCliente: any) {
     let estadoCliente1 = estadoCliente
-    estadoCliente1 = estadoCliente === 0 ? 1:0;
+    estadoCliente1 = estadoCliente === 0 ? 1 : 0;
     const requestBody = {
-      "estadoCliente" : estadoCliente1
+      "estadoCliente": estadoCliente1
     }
-    const data = await (await this.stateClient(requestBody,numeroIdent)).toPromise();
-
-    window.location.reload();
-
+  
+    try {
+      const data = await this.stateClient(requestBody, numeroIdent);
+      window.location.reload();
+    } catch (error) {
+      if (error === 401) {
+        this.handleUnauthorizedError();
+      }
+    }
   }
 
   async stateClient(requestBody: any, numeroIdent: any) {
@@ -129,5 +137,22 @@ export class DashboardComponent {
     this.cookieService.deleteAll();
     this.router.navigate(['login']);
   }
+
+  
+  registrar() {
+    this.router.navigate(['formclient']);
+  }
+
+  filterClients(): any[] {
+    return this.clientes.filter(cliente =>
+      cliente.nombresCliente.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      cliente.apellidosCliente.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      cliente.numIdentCliente.toString().includes(this.searchTerm) || // Convertir a cadena antes de comparar
+      cliente.correoCliente.toString().includes(this.searchTerm) || // Convertir a cadena antes de comparar
+      cliente.telefonoCliente.toString().includes(this.searchTerm)    // Convertir a cadena antes de comparar
+    );
+  }
+  
+  
 
 }

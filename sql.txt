@@ -21,17 +21,17 @@ estadoCiudad boolean not null
 );
 
 create table ocupacion(
-idocupacion int auto_increment primary key,
-nombreocupacion varchar (115) not null,
-estadoocupacion boolean not null
+idOcupacion int auto_increment primary key,
+nombreOcupacion varchar (115) not null,
+estadoOcupacion boolean not null
 );
 
 create table gerenteComercial(
 numIdentGerentC bigint unique not null primary key,
-correoGerentC varchar (255) unique not null,
-passwordGerenteC varchar (105) not null,
 nombresGerenteC varchar (85) not null,
-apellidosGerenteC varchar (85) not null
+apellidosGerenteC varchar (85) not null,
+correoGerentC varchar (255) unique not null,
+passwordGerenteC varchar (105) not null
 );
 
 ALTER TABLE cliente
