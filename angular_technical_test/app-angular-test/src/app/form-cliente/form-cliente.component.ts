@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';  // Importa Location
 import { CookieService } from 'ngx-cookie-service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-form-cliente',
   templateUrl: './form-cliente.component.html',
@@ -47,6 +49,10 @@ export class FormClienteComponent {
       // Clientes
       this.http.get<any>(`http://127.0.0.1:5000/clientes/${this.numIdentCliente}`, { headers }).subscribe(data => {
         console.log(data);
+        if(data.message == "Unauthorized"){
+          this.cookieService.deleteAll();
+          this.router.navigate(['login']);
+        }
         if (data.success == true) {
           // Asigna los valores a los campos del formulario
           const cliente = data.clientes[0];
@@ -131,7 +137,7 @@ export class FormClienteComponent {
           return;
         }
         if(this.validarFechaNacimiento(this.fechaNacimientoCliente) == false){
-          this.dataError = 'La fecha de nacimiento no es válida. Debe tener entre 6 y 80 años.';
+          this.dataError = 'La fecha de nacimiento no es válida. Debe tener entre 15 y 80 años.';
           return;
         }
 
@@ -163,8 +169,12 @@ export class FormClienteComponent {
           "idOcupacionFK":this.idOcupacionFK,
         }
         try {
-          const data = await (await this.putCliente(requestBody, this.numIdentCliente)).toPromise();
+          const data = await this.putCliente(requestBody, this.numIdentCliente);
           console.log(data)
+          if(data.message == "Unauthorized"){
+            this.cookieService.deleteAll();
+            this.router.navigate(['login']);
+          }
           this.router.navigate(['dashboard']);
     
           // Errores de excepciones del servidor
@@ -235,7 +245,7 @@ validarFechaNacimiento(fechaNacimientoCliente:string) {
   const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
 
   // Verifica si la fecha de nacimiento es válida (entre 6 y 80 años en el pasado)
-  if (edad < 6 || edad > 80) {
+  if (edad < 15 || edad > 80) {
     return false
   } else {
    return true
@@ -248,14 +258,30 @@ validarFechaNacimiento(fechaNacimientoCliente:string) {
 
 // Put
 
-  async putCliente(requestBody: any, numeroIdent: any){
-    const token = this.cookieService.get('token');
+async putCliente(requestBody: any, numeroIdent: any) {
+  const token = this.cookieService.get('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  return this.http.put<any>(`http://127.0.0.1:5000/clientes/${numeroIdent}`, requestBody, { headers })
+    .toPromise()
+    .catch(error => {
+      if (error.status === 401) {
+        this.handleUnauthorizedError();
+      }
+      throw error; // Re-lanza el error para que pueda ser manejado en otros lugares si es necesario
+    });
+}
+
+  private handleUnauthorizedError() {
+    // Manejar el error 401 aquí, por ejemplo, redirigir al usuario al inicio de sesión
+    Swal.fire({
+      title: '¡Sesión expirada!',
+      text: 'La sesión se cerró porque el token expiró.',
+      icon: 'error'
+    });
     
-  
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
-    return this.http.put<any>(`http://127.0.0.1:5000/clientes/${numeroIdent}`, requestBody, { headers });
-  
+    this.cookieService.deleteAll();
+    this.router.navigate(['login']);
   }
 
 

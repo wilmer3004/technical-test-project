@@ -84,7 +84,7 @@ h1{
   
   /* Estilo para las celdas de encabezado */
   .table-head th {
-    background-color: #66b662;
+    background-color: #41a044;
     padding: 10px;
     text-align: left;
     border: 2px solid #ddd;
@@ -99,7 +99,7 @@ h1{
     text-align: left;
     font-size: 20px;
     border: 2px solid #ddd;
-    color: #535353;
+    color: #282828;
   }
   
   /* Alternar colores de fondo para las filas */
@@ -110,36 +110,62 @@ h1{
   /* Estilo para los botones en las celdas de cuerpo */
   .table-body button {
     padding: 5px 10px;
-    background-color: #4caf50;
+    background-color: #41a044;
     color: white;
     border: none;
     cursor: pointer;
     width: 100%;
     height: 40px;
-    font-size: 20px;
+    font-size: 22px;
   }
   
 /* Estilo para los botones de activar/inactivar */
 .table-body button.inactive {
-  background-color: #f44336;
+  background-color: #cd372d;
   color: white; /* Add this line to make text visible on red background */
+  box-shadow: 2px 2px 2px #000;
 }
 
 .table-body button.active {
-  background-color: #4caf50;
+  background-color: #41a044;
   color: white; /* Add this line to make text visible on green background */
+  box-shadow: 2px 2px 2px #000;
+
 }
   
   /* Estilo para los botones de editar */
   .table-body button.edit {
-    background-color: #1759ca;
+    background-color: transparent;
   }
+
+
+
 .textCuerpo > p{
   font-size: 45px;
   color: #47AA42;
   text-shadow: 4px 4px 8px #606060;
 
 } 
+
+.img-editar{
+  width: 38px;
+  height: 38px;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+}
+
+/* Estilo para los botones de activar/inactivar */
+.table-body button.inactive:hover {
+  background-color: #a61f15;
+}
+
+.table-body button.active:hover {
+  background-color: #207823;
+
+
+}
 
 
 

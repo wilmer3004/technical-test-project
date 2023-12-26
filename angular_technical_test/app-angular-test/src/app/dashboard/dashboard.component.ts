@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';  // Importa Location
 import { CookieService } from 'ngx-cookie-service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -30,16 +32,26 @@ export class DashboardComponent {
       // Clientes
       this.http.get<any>('http://127.0.0.1:5000/clientes/', { headers }).subscribe(data => {
         console.log(data);
+
+        
         if(data.success == true){
         this.clientes=data.clientes
         }
-      });
+
+      },
+      error => {
+        if (error.status === 401) {
+          this.handleUnauthorizedError();
+        }
+      }
+      );
 
       // Ocupaciones
       this.http.get<any>('http://127.0.0.1:5000/ocupacion/', { headers }).subscribe(data => {
         console.log(data);
         if(data.success == true){
           this.ocupaciones=data.ocupacion;
+          
 
           // Crear el mapeo
           this.ocupacionMap = {};
@@ -83,21 +95,39 @@ export class DashboardComponent {
       "estadoCliente" : estadoCliente1
     }
     const data = await (await this.stateClient(requestBody,numeroIdent)).toPromise();
+
     window.location.reload();
 
   }
 
   async stateClient(requestBody: any, numeroIdent: any) {
     const token = this.cookieService.get('token');
-  
-
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   
-    return this.http.put<any>(`http://127.0.0.1:5000/clientes/inactivate/${numeroIdent}`, requestBody, { headers });
+    return this.http.put<any>(`http://127.0.0.1:5000/clientes/inactivate/${numeroIdent}`, requestBody, { headers })
+      .toPromise()
+      .catch(error => {
+        if (error.status === 401) {
+          this.handleUnauthorizedError();
+        }
+        throw error; // Re-lanza el error para que pueda ser manejado en otros lugares si es necesario
+      });
   }
 
   formularioCliente(numeroIdent:any){
     this.router.navigate(['formclient',numeroIdent]);
+  }
+
+  private handleUnauthorizedError() {
+    Swal.fire({
+      title: '¡Sesión expirada!',
+      text: 'La sesión se cerró porque el token expiró.',
+      icon: 'error'
+    });
+    
+    // Manejar el error 401 aquí, por ejemplo, redirigir al usuario al inicio de sesión
+    this.cookieService.deleteAll();
+    this.router.navigate(['login']);
   }
 
 }

@@ -122,7 +122,7 @@ export class FormClientePostComponent {
           return;
         }
         if(this.validarFechaNacimiento(this.fechaNacimientoCliente) == false){
-          this.dataError = 'La fecha de nacimiento no es válida. Debe tener entre 6 y 80 años.';
+          this.dataError = 'La fecha de nacimiento no es válida. Debe tener entre 15 y 80 años.';
           return;
         }
 
@@ -225,7 +225,7 @@ export class FormClientePostComponent {
     const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
 
     // Verifica si la fecha de nacimiento es válida (entre 6 y 80 años en el pasado)
-    if (edad < 6 || edad > 80) {
+    if (edad < 15 || edad > 80) {
       return false
     } else {
      return true
